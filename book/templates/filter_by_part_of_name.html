@@ -1,0 +1,17 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    {% if is_empty %}
+        <p>No books has {{part_of_name}} in its title!</p>
+    {% else %}
+        <p>All books that have {{part_of_name}} in titles:</p>
+        <hr>
+        {% for book in books %}
+            <div class="book">
+                <p>id {{book.id}}. {{book.name}} ( {{book.description}})</p>
+                <p>Only {{book.count}} books left</p>
+            </div>
+            <hr>
+        {% endfor %}
+    {% endif %}
+{% endblock %}

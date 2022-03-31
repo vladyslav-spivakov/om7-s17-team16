@@ -36,7 +36,6 @@ def filter_by_author_id(request, author_id):
             'author_id': author_id,
         }
     else:
-        print(author.books.all())
         books = author.books.all()
         context = {
         'no_author' : False,
@@ -47,3 +46,16 @@ def filter_by_author_id(request, author_id):
 
 
     return render(request, 'filter_by_author_id.html', context)
+
+def filter_by_part_of_name(request, part_of_name):
+
+    books = [book for book in models.Book.get_all() if part_of_name in book.name]
+
+
+    context = {
+        'is_empty' : not bool(books),
+        'books' : books,
+        'part_of_name': part_of_name,
+    }
+
+    return render(request, 'filter_by_part_of_name.html', context)
