@@ -1,0 +1,14 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    {% if not_found %}
+        <p>There is no book with {{id}}(id) in library</p>
+    {% else %}
+        <div class="book">
+            <p>Found {{id}}(id) book:</p>
+            <p>{{book.name}} ( {{book.description}})</p>
+            <p>Only {{book.count}} books left</p>
+        </div>
+        <hr>
+    {% endif %}
+{% endblock %}
