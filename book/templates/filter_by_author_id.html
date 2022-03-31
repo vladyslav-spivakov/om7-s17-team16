@@ -1,0 +1,27 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    {% if no_author %}
+        <p>No author with id {{author_id}}!</p>
+
+    {% else %}
+
+        {% if is_empty %}
+            <p>No books from {{author.name}}!</p>
+
+        {% else %}
+
+        <hr>
+
+            {% for book in books %}
+                <div class="book">
+                    <p>id {{book.id}}. {{book.name}} ( {{book.description}})</p>
+                    <p>Only {{book.count}} books left</p>
+                </div>
+                <hr>
+            {% endfor %}
+
+        {% endif %}
+
+    {% endif %}
+{% endblock %}
