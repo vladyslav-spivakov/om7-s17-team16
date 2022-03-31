@@ -1,13 +1,13 @@
-{% extends 'base.html' %}
+{% extends 'book_base.html' %}
 
-{% block content %}
+{% block page %}
     {% if is_empty %}
         <p>No books in library!</p>
     {% else %}
         <hr>
         {% for book in books %}
             <div class="book">
-                <p>id {{book.id}}. {{book.name}} ( {{book.description}})</p>
+                <p><a href="/book/{{book.id}}">id {{book.id}}. {{book.name}} ( {{book.description}})</a></p>
                 <p>Only {{book.count}} books left</p>
             </div>
             <hr>
