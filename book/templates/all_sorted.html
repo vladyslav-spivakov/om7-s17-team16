@@ -1,0 +1,17 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    {% if is_empty %}
+        <p>No books in library!</p>
+    {% else %}
+        <p>Sorted by {{sorted_by}}:</p>
+        <hr>
+        {% for book in books %}
+            <div class="book">
+                <p>id {{book.id}}. {{book.name}} ( {{book.description}})</p>
+                <p>Only {{book.count}} books left</p>
+            </div>
+            <hr>
+        {% endfor %}
+    {% endif %}
+{% endblock %}

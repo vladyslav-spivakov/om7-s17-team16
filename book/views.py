@@ -59,3 +59,42 @@ def filter_by_part_of_name(request, part_of_name):
     }
 
     return render(request, 'filter_by_part_of_name.html', context)
+
+def sort_by_name_desc(request):
+    
+    books = list(models.Book.objects.all().order_by('-name'))
+
+    context = {
+        'is_empty' : not bool(books),
+        'books' : books,
+        'sorted_by': 'name in descending order',
+    }
+
+
+    return render(request, 'all_sorted.html', context)
+
+def sort_by_name_asc(request):
+    
+    books = list(models.Book.objects.all().order_by('name'))
+
+    context = {
+        'is_empty' : not bool(books),
+        'books' : books,
+        'sorted_by': 'name in ascending order',
+    }
+
+
+    return render(request, 'all_sorted.html', context)
+
+def sort_by_count(request):
+    
+    books = list(models.Book.objects.order_by('count'))
+
+    context = {
+        'is_empty' : not bool(books),
+        'books' : books,
+        'sorted_by': 'count',
+    }
+
+
+    return render(request, 'all_sorted.html', context)
