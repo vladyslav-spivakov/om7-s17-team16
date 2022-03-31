@@ -49,7 +49,7 @@ def filter_by_author_id(request, author_id):
 
 def filter_by_part_of_name(request, part_of_name):
 
-    books = [book for book in models.Book.get_all() if part_of_name in book.name]
+    books = list(models.Book.objects.filter(name__icontains=part_of_name))
 
 
     context = {
