@@ -4,10 +4,13 @@
     {% if is_empty %}
         <p>No books in library!</p>
     {% else %}
+        <hr>
         {% for book in books %}
             <div class="book">
-                <p>{{book}}</p>
+                <p>{{book.name}} ( {{book.description}})</p>
+                <p>Only {{book.count}} books left</p>
             </div>
+            <hr>
         {% endfor %}
     {% endif %}
 {% endblock %}
