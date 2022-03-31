@@ -1,0 +1,13 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    {% if is_empty %}
+        <p>No books in library!</p>
+    {% else %}
+        {% for book in books %}
+            <div class="book">
+                <p>{{book}}</p>
+            </div>
+        {% endfor %}
+    {% endif %}
+{% endblock %}
