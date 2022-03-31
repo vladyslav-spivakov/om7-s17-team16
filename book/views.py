@@ -9,7 +9,7 @@ def index(request):
 
 def all_books(request):
     books = models.Book.get_all()
-    
+
     context = {
         'is_empty' : not bool(books),
         'books' : books
@@ -29,13 +29,15 @@ def book_by_id(request, id_book):
 
 def filter_by_author_id(request, author_id):
     author = models.Author.get_by_id(author_id)
+
     if author is None:
         context = {
             'no_author': True,
             'author_id': author_id,
         }
     else:
-        books = author.books
+        print(author.books.all())
+        books = author.books.all()
         context = {
         'no_author' : False,
         'is_empty' : not bool(books),
