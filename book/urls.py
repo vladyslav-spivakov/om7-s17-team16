@@ -10,5 +10,6 @@ urlpatterns = [
     path('book/sort_name_asc/', views.sort_by_name_asc),
     path('book/sort_name_desc/', views.sort_by_name_desc),
     path('book/sort_by_count/', views.sort_by_count),
+    path('book/unordered/', views.all_unordered_books),
     
 ]

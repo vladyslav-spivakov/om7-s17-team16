@@ -1,5 +1,6 @@
 from django.shortcuts import redirect, render
 from . import models
+from order.models import Order
 
 # Create your views here.
 
@@ -98,3 +99,15 @@ def sort_by_count(request):
 
 
     return render(request, 'all_sorted.html', context)
+
+def all_unordered_books(request):
+
+    ordered_books_id = {order.book.id for order in Order.objects.all()}
+    books = list(models.Book.objects.exclude(id__in=ordered_books_id))
+    print(ordered_books_id)
+    context = {
+        'is_empty' : not bool(books),
+        'books' : books,
+    }
+
+    return render(request, 'unordered_books.html', context)
