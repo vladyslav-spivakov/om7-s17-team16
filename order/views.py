@@ -42,7 +42,6 @@ def order_from_specific_user(request, user_id):
 
 
     orders = list(models.Order.objects.filter(user__in=CustomUser.objects.filter(id=user_id)))
-    print(orders)
     content = {
         'user_not_found': False,
         'user': CustomUser.get_by_id(user_id),
@@ -53,3 +52,21 @@ def order_from_specific_user(request, user_id):
     }
 
     return render(request, 'order_user.html', content)
+
+
+def over_dated_orders(request):
+
+    orders = list(models.Order.objects.filter(plated_end_at__lte=datetime.datetime.now()))
+    users_order = {order.user for order in orders}
+    users = {}
+    for user in users_order:
+        users.update({user:[]})
+    for order in orders:
+        users[order.user].append(order)
+
+    content = {
+        'is_empty': not bool(users),
+        'users' : users,
+    }
+
+    return render(request, 'over_dated.html', content)
