@@ -1,6 +1,6 @@
-{% extends 'base.html '%}
+{% extends 'author_base.html '%}
 
-{% block content %}
+{% block page %}
 <form action="" method="post" autocomplete="off">
     {% csrf_token %}
     
@@ -8,4 +8,4 @@
     <button type="Submit">{{button_submit}}</button>
 
 </form>
-{% endblock content %}
+{% endblock page %}

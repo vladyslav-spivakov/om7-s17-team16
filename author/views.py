@@ -7,7 +7,7 @@ from .models import Author
 
 def authors_update(request, id=0):
 
-    if request.method == 'POST':
+    if request.method == 'POST': #Post method
         if id == 0:
             form = AuthorForm(request.POST)
             button_submit = 'Add'
@@ -16,9 +16,10 @@ def authors_update(request, id=0):
             button_submit = 'Update'
 
         if form.is_valid():
-            return redirect('/book/')
+            form.save()
+            return redirect('/author/list')
 
-    else:
+    else: #Get method
         if id == 0:
             form = AuthorForm()
             button_submit = 'Add'
@@ -33,4 +34,10 @@ def authors_update(request, id=0):
 
 
 def author_list(request):
-    pass
+    authors = list(Author.objects.all())    
+    context = {
+        'is_empty': bool(authors),
+        'authors': authors
+    }
+
+    return render(request, 'author_list.html', context)
