@@ -1,5 +1,6 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from .models import CustomUser
+from .forms import CustomUserForm
 
 # Create your views here.
 
@@ -14,7 +15,28 @@ def user_list(request):
     return render(request, 'user_list.html', context)
 
 def user_post(request, id=0):
+    if request.method == 'POST': #POST method
+        if id == 0: #Add user
+            form = CustomUserForm(request.POST)
+            button_submit = 'Add'
+        else:
+            form = CustomUserForm(request.POST, instance=CustomUser.get_by_id(id))
+            button_submit = 'Submit'
+        
+        if form.is_valid():
+            form.save()
+            return redirect('user:user_list')
 
+    else: #GET method
+        if id == 0: #Add user
+            form = CustomUserForm()
+            button_submit = 'Add'
+        else:
+            form = CustomUserForm( instance=CustomUser.get_by_id(id))
+            button_submit = 'Submit'
 
-    context = {}
-    return render(request, 'user_list.html', context)
+    context = {
+        'form':form,
+        'button_submit':button_submit,
+    }
+    return render(request, 'user_post.html', context)
