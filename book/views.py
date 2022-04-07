@@ -1,6 +1,7 @@
 from django.shortcuts import redirect, render
 from . import models
 from order.models import Order
+from .forms import BookForm
 
 # Create your views here.
 
@@ -111,3 +112,33 @@ def all_unordered_books(request):
     }
 
     return render(request, 'unordered_books.html', context)
+
+
+def book_post(request, id=0):
+
+    if request.method == 'POST': #POST method
+        if id==0: # Add book
+            form=BookForm(request.POST)
+            button_submit = 'Add'
+        else:
+            form=BookForm(request.POST, instance=models.Book.get_by_id(id))
+            button_submit = 'Update'
+
+        if form.is_valid():
+            form.save()
+            return redirect('/book/')
+
+    else: #GET method
+        if id==0: # Add book
+            form=BookForm()
+            button_submit = 'Add'
+        else:
+            form=BookForm(instance=models.Book.get_by_id(id))
+            button_submit = 'Update'
+
+    context = {
+        'form':form,
+        'button_submit': button_submit,
+
+    }
+    return render(request, 'book_post.html', context)
