@@ -1,4 +1,4 @@
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_object_or_404
 from .forms import AuthorForm
 from .models import Author
 
@@ -12,7 +12,7 @@ def authors_update(request, id=0):
             form = AuthorForm(request.POST)
             button_submit = 'Add'
         else:
-            form = AuthorForm(request.POST, instance=Author.get_by_id(id))
+            form = AuthorForm(request.POST, instance=get_object_or_404(Author,pk=id))
             button_submit = 'Update'
 
         if form.is_valid():
@@ -24,7 +24,7 @@ def authors_update(request, id=0):
             form = AuthorForm()
             button_submit = 'Add'
         else:
-            form = AuthorForm(instance=Author.get_by_id(id))
+            form = AuthorForm(instance=get_object_or_404(Author,pk=id))
             button_submit = 'Update'
     content = {
         'form': form,

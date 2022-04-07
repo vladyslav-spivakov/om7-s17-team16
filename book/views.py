@@ -2,6 +2,7 @@ from django.shortcuts import redirect, render
 from . import models
 from order.models import Order
 from .forms import BookForm
+from django.shortcuts import get_object_or_404
 
 # Create your views here.
 
@@ -121,7 +122,7 @@ def book_post(request, id=0):
             form=BookForm(request.POST)
             button_submit = 'Add'
         else:
-            form=BookForm(request.POST, instance=models.Book.get_by_id(id))
+            form=BookForm(request.POST, instance=get_object_or_404(models.Book,pk=id))
             button_submit = 'Update'
 
         if form.is_valid():
@@ -133,7 +134,7 @@ def book_post(request, id=0):
             form=BookForm()
             button_submit = 'Add'
         else:
-            form=BookForm(instance=models.Book.get_by_id(id))
+            form=BookForm(instance=get_object_or_404(models.Book,pk=id))
             button_submit = 'Update'
 
     context = {

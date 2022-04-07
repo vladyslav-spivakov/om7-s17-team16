@@ -1,4 +1,4 @@
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_object_or_404
 from .models import CustomUser
 from .forms import CustomUserForm
 
@@ -20,7 +20,7 @@ def user_post(request, id=0):
             form = CustomUserForm(request.POST)
             button_submit = 'Add'
         else:
-            form = CustomUserForm(request.POST, instance=CustomUser.get_by_id(id))
+            form = CustomUserForm(request.POST, instance=get_object_or_404(CustomUser,pk=id))
             button_submit = 'Submit'
         
         if form.is_valid():
@@ -32,7 +32,7 @@ def user_post(request, id=0):
             form = CustomUserForm()
             button_submit = 'Add'
         else:
-            form = CustomUserForm( instance=CustomUser.get_by_id(id))
+            form = CustomUserForm( instance=get_object_or_404(CustomUser,pk=id))
             button_submit = 'Submit'
 
     context = {
