@@ -1,9 +1,11 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from . import models
 from authentication.models import CustomUser
 from book.models import Book
 from authentication.models import CustomUser
 import datetime
+from .forms import OrderForm
+from django.shortcuts import get_object_or_404
 # Create your views here.
 
 def order_by_created_at(request):
@@ -74,5 +76,29 @@ def over_dated_orders(request):
 
 
 
+def order_post(request, id=0):
+    if request.method == 'POST': #POST method
+        if id == 0: #Add user
+            form = OrderForm(request.POST)
+            button_submit = 'Add'
+        else:
+            form = OrderForm(request.POST, instance=get_object_or_404(models.Order,pk=id))
+            button_submit = 'Submit'
+        
+        if form.is_valid():
+            form.save()
+            return redirect('order:order_list')
 
-    
+    else: #GET method
+        if id == 0: #Add user
+            form = OrderForm()
+            button_submit = 'Add'
+        else:
+            form = OrderForm( instance=get_object_or_404(models.Order,pk=id))
+            button_submit = 'Submit'
+
+    context = {
+        'form':form,
+        'button_submit':button_submit,
+    }
+    return render(request, 'user_post.html', context)
